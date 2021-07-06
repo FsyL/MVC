@@ -1,0 +1,109 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script type="text/javascript">
+        function succ(data) {
+            if (data == "") {
+                window.location.href = "/User/Index";
+            }
+        }
+    </script>
+    <style type="text/css">
+        body {
+            background-image: url('../../img/loginBg1920_937.jpg');
+        }
+
+        .titlehb{
+            font-size:50px;
+            color:red;
+            width:800px;
+            height:100px;
+            line-height:100px;
+            margin-top:5%;
+            margin-left:30px;
+            text-shadow:6px 6px 6px black;
+            font-weight:600;
+        }
+        .log{
+            margin-right:40px;
+        }
+        .bom{
+            color:#ffffff;
+            margin-top:30vh;
+            margin-left:23vw;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <img src="~/img/logo.png" />
+        </div>
+        <div class="row">
+            <div class="col-md-8 col-md-offset-1 ">
+                <div class="text-center titlehb"><i>湖北国土资源论坛登录</i></div>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4 " >
+                @using (Ajax.BeginForm("Login", "User", new AjaxOptions
+                {
+                    InsertionMode = InsertionMode.Replace,
+                    HttpMethod = "post",
+                    UpdateTargetId = "sbai",
+                    OnSuccess = "succ"
+                },new { @class="toptxt" }))
+                {
+                <table class="table" style="margin-top:5%">
+                    <tr>
+                        <td style="border-top:none">账号:</td>
+                        <td style="border-top:none">
+                            @Html.TextBox("txtName")
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border-top:none">
+                            密码:
+                        </td>
+                        <td style="border-top:none">
+                            @Html.Password("txtPwd")
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border-top:none" colspan="2" class="text-center">
+                            <input type="submit" class="btn btn-danger log" value="登录" />
+                            @Html.ActionLink("注册", "Reg", "User", new { @class = "btn btn-success" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border-top:none" colspan="2">
+                            <div id="sbai" style="color:#ff6a00; font-size:15px ;border-top:none" class="text-center "></div>
+                        </td>
+                    </tr>
+                </table>
+                }
+            </div>
+        </div>
+        <div class="row">
+            <div class="bom col-md-4 col-md-offset-4">
+                <p>温馨提示:</p>
+                <p>*注意保护账号，退出是请使用安全退出</p>
+                <p>*避免他人侵犯个人隐私</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

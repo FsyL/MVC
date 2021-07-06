@@ -1,0 +1,76 @@
+﻿@model Mvc_BBS.Models.userIinfo
+<div class="Uptbox">
+    <div class="uptcon">
+        @using (Html.BeginForm("Uptpersonal", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <table>
+                <tr>
+                    <td>
+                        <img src="~/LogoImg/@Model.logo" class="tlogoimg" />
+                    </td>
+                    <td>
+
+                        <input name="file" type="file" class="filelogo" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        姓名:
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(t=>t.name)
+                        @Html.HiddenFor(t=>t.id)
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border-top:none">
+                        密码:
+                    </td>
+                    <td style="border-top:none">
+                        @Html.TextBoxFor(t=>t.pwd)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        性别:
+                    </td>
+                    <td>
+                        @Html.RadioButton("rSex", 1, Model.sex==1) 男
+                        @Html.RadioButton("rSex", 0, Model.sex == 0) 女
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        签名:
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(t=>t.signs)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        邮箱:
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(t=>t.email)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        QQ:
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(t=>t.qq)
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" >
+                        <input class="btn btn-info btnupt" type="submit" value="更新" />
+                        <input class="btn btn-warning btnUsercancel" type="button" value="取消" />
+                    </td>
+                </tr>
+            </table>
+        }
+    </div>
+</div>

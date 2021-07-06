@@ -1,0 +1,15 @@
+﻿@using Mvc_BBS.Models
+@{
+    Layout = null;
+    replyInfo r= ViewBag.r;
+}
+<hr />
+<div class="rep">
+    &emsp;@Html.ActionLink(r.replyuname, "#", "#")
+    @Html.Label(r.replytime.ToString(), new { @class = "pull-right rtime" })
+    <br /><br />
+    &emsp;&emsp;@Html.Label("txtreply", r.relycontent)
+    <br />
+    &emsp;<span class="glyphicon glyphicon-thumbs-up good" aria-hidden="true">赞</span>
+</div>
+           

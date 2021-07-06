@@ -1,0 +1,38 @@
+﻿@model Mvc_BBS.Models.boardInfo
+<div id="addcon">
+    @using (Html.BeginForm("Uptpan", "Post", FormMethod.Post))
+    {
+        <table class="tables">
+            <tr class="trs">
+                <td class="tds">
+                    板块名称:
+                </td>
+                <td>
+                    @Html.TextBoxFor(t => t.boardname)
+                    @Html.HiddenFor(t=>t.boardid)
+                </td>
+            </tr>
+            <tr class="trs">
+                <td class="tds">
+                    板块描述:
+                </td>
+                <td>
+                    @Html.TextAreaFor(t => t.boarddescription)
+                </td>
+            </tr>
+            <tr class="trs">
+                <td class="tds">有效性：</td>
+                <td>
+                    @Html.CheckBox("valide", Model.valid==1)
+                </td>
+            </tr>
+            <tr class="trs">
+                <td></td>
+                <td>
+                    <input type="submit" value="修改" class="btn btn-success btnmajin" />
+                    <input type="button" value="取消" class="btn btn-primary" id="uptcancel" />
+                </td>
+            </tr>
+        </table>
+    }
+</div>

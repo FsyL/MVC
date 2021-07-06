@@ -1,0 +1,85 @@
+﻿@using Mvc_BBS.Models
+@model List<Mvc_BBS.Models.boardInfo>
+@{
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <style type="text/css">
+        .left {
+            height: 50vh;
+            position: fixed;
+            top: 25vh;
+            margin-left: 38px;
+        }
+
+        .right {
+            height: 500vh;
+            border: 1px solid #808080;
+        }
+
+        .boarSyl:link {
+            display: block;
+            margin-top: 10px;
+            font-size: 20px;
+            text-align: center;
+            color:#000000;
+            text-decoration: none;
+        }
+
+        .boarSyl:hover {
+            border-radius: 10px;
+            background-color: #ea6767;
+            color: white;
+        }
+        
+        
+    </style>
+    <script type="text/javascript">
+        $(function () {
+            $.ajax({
+                url: "/User/GetPost",
+                type: "post",
+                success: function (data) {
+                    $("#showpos").html(data);
+                }
+            })
+        })
+    </script>
+
+
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-1 col-sm-1 col-xs-1 left">
+                <div>
+                    <img src="~/img/platelogo90_60.png" />
+                </div>
+                <div>
+                    @foreach (var b in Model)
+                    {
+                        @Ajax.ActionLink(b.boardname, "Post", "User", new { bid = b.boardid }, new AjaxOptions
+                   {
+                       InsertionMode = InsertionMode.Replace,
+                       HttpMethod = "post",
+                       UpdateTargetId = "showpos"
+                   }, new { @class = "boarSyl" })
+                        }
+                </div>
+                
+            </div>
+            <div class="col-md-10 col-md-offset-2 col-xs-10 col-xs-offset-2 col-sm-10 col-sm-offset-2  right">
+                <div id="showpos"></div>
+            </div>
+        </div>
+    </div>
+
+    
+</body>
+</html>

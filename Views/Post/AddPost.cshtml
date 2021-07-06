@@ -1,0 +1,64 @@
+﻿@model Mvc_BBS.Models.postInfo
+@{
+    List<SelectListItem> lt = ViewBag.lt;
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <style type="text/css">
+        .txtare{
+            width:800px;
+            height:500px;
+        }
+        .txttitle{
+            width:400px;
+            height:50px;
+        }
+        .drop{
+            width:200px;
+            height:30px;
+            text-align:center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <h3>有什么新鲜事想告诉大家?</h3>
+            @using (Html.BeginForm("AddPost", "Post",FormMethod.Post))
+            {
+                <table class="table table-hover table-bordered">
+                    <tr>
+                        <td>标题：</td>
+                        <td>
+                            @Html.TextBoxFor(t => t.posttitle, new { @class = "txttitle" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>所属板块：</td>
+                        <td>
+                            @Html.DropDownListFor(t => t.boardid,lt,new { @class="drop" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>内容：</td>
+                        <td>
+                            @Html.TextAreaFor(t => t.postcontent,20,30,new { @class="txtare" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>帖子标题</td>
+                        <td>
+                            <input type="submit" class="btn btn-danger" value="发布" />
+                        </td>
+                    </tr>
+                </table>
+            }
+        </div>
+    </div>
+
+</body>
+</html>
+

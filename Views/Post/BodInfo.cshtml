@@ -1,0 +1,172 @@
+﻿@using Mvc_BBS.Models;
+@{
+    List<boardInfo> lb = ViewBag.lb;
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+    ViewBag.Title = "BodInfo";
+}
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
+<style type="text/css"> 
+    #txtdescription{
+        width:200px;
+        height:50px;
+    }
+    #addcon {
+        width: 380px;
+        height: 250px;
+        background-color: white;
+        padding:40px 10px;
+        margin-top: 25vh;
+        margin-left: 40vw;
+        border-radius:14px;
+        border:1px solid #d8d5d5;
+    }
+    #uptbox{
+        width: 100vw;
+        height: 100vh;
+        position: fixed;
+        opacity:0.9;
+        top: 0px;
+        background-color: #eae5e5;
+    }
+    #addbox {
+        width: 100vw;
+        height: 100vh;
+        position: fixed;
+        opacity:0.9;
+        top: 0px;
+        background-color: #eae5e5;
+    }
+    .trs{
+        height:50px;
+    }
+    .tds{
+        padding-right:20px;
+    }
+    .tables{
+        margin-left:30px;
+    }
+    .btnmajin{
+        margin:0px 30px 0px 10px;   
+    }
+</style>
+<script type="text/javascript">
+
+    $(function () {
+        
+        //进入页面隐藏添加板块
+        $("#addbox").hide();
+        $("#uptbox").hide();
+        //点击添加板块信息按钮事件
+        $(".addbord").click(function () {
+            $(".addbord").hide();
+            $("#addbox").show();
+            
+        })
+        //点击取消按钮事件
+        $("#addcancel").click(function () {
+            
+            $("#txtname").val("");
+            $("#txtdescription").val("");
+            $("#addbox").hide();
+            $(".addbord").show();
+        })
+
+    })
+
+    function uptsuccess() {
+            //Ajax成功后隐藏修改面板
+            $("#uptbox").show();
+
+            //修改取消按钮事件
+            $("#uptcancel").click(function () {
+                $("#uptbox").hide();
+            })
+        }
+
+</script>
+<div class="container">
+    <div class="row">
+        <table class="table table-bordered table-hover text-center">
+            <tr>
+                <td>板块名称</td>
+                <td>板块描述</td>
+                <td>有效性</td>
+                <td>操作</td>
+            </tr>
+
+            @foreach (var itme in lb)
+            {
+                <tr>
+                    <td>@itme.boardname</td>
+                    <td>@itme.boarddescription</td>
+                    <td>@(itme.valid==1?"是":"否")</td>
+                    <td>
+                        @Ajax.ActionLink("修改", "Uptbar", "Post", new { bid = itme.boardid },new AjaxOptions {
+                       HttpMethod="post",
+                       InsertionMode=InsertionMode.Replace,
+                       UpdateTargetId= "uptbox",
+                       OnSuccess="uptsuccess"
+                   },new { @class = "btn btn-info" })
+
+                        @Html.ActionLink("删除", "Delbar", "Post", new { bid = itme.boardid }, new { @class="btn btn-danger",onclick = "return confirm('确定删除么')" })
+                        
+                    </td>
+                </tr>
+            }
+        </table>
+        <div class="row">
+            <input type="button" value="添加板块信息" class="btn btn-success addbord" />
+        </div>
+
+    </div>
+</div>
+
+@* 修改 *@
+<div id="addbox">
+    <div id="addcon">
+        @using (Html.BeginForm("AddBoard", "Post", FormMethod.Post))
+        {
+            <table class="tables">
+                <tr class="trs">
+                    <td class="tds">
+                        板块名称:
+                    </td>
+                    <td>
+                        @Html.TextBox("txtname")
+                    </td>
+                </tr>
+                <tr class="trs">
+                    <td class="tds">
+                        板块描述:
+                    </td>
+                    <td>
+                        @Html.TextBox("txtdescription")
+                    </td>
+                </tr>
+                <tr class="trs">
+                    <td class="tds">有效性：</td>
+                    <td>
+                        @Html.CheckBox("valid", true)
+                    </td>
+                </tr>
+                <tr class="trs">
+                    <td>
+                    </td>
+                    <td>
+                        <input type="submit" value="添加" class="btn btn-warning btnmajin" />
+                        <input type="button" value="取消" class="btn btn-primary" id="addcancel" />
+                    </td>
+                </tr>
+            </table>
+        }
+    </div>
+</div>
+
+
+@* 修改 *@
+<div id="uptbox">
+    @* Ajax加载修改面板 *@
+</div>
+

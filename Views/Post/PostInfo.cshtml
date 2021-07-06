@@ -1,0 +1,58 @@
+﻿@model List<Mvc_BBS.Models.postInfo>
+@{
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>PostInfo</title>
+    <style type="text/css">
+        .txt{
+            margin:20px 0px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="txt">
+                @using (Html.BeginForm("Postinqu", "Post",FormMethod.Post))
+                {
+                    @Html.TextBox("txttitle")
+                    <input type="submit"  value="查询" class="btn btn-danger"/>
+                }
+            </div>
+        </div>
+        <div class="row">
+            <table class="table table table-hover table-bordered table-condensed">
+                <tr>
+                    <td>标题</td>
+                    <td>内容</td>
+                    <td>有效性</td>
+                    <td>操作</td>
+                </tr>
+                @for (int i = 0, j = 0; i < Model.Count; j++, i++)
+                {
+                    <tr>
+                        <td>@(Model[i].posttitle.ToString().Length>=10? Model[i].posttitle.ToString().Substring(0,10)+"...": Model[i].posttitle)</td>
+                        <td>@(Model[i].postcontent.ToString().Length>=15?Model[i].postcontent.ToString().Substring(0,15)+"...": Model[i].postcontent)</td>
+                        <td>@(Model[i].valid==1?"有效":"无效")</td>
+                        <td>
+                            @if(Model[i].valid==1){ 
+                                @Html.ActionLink("更改为无效", "DelPost", "Post",new { pid=Model[i].postid ,pvalid=Model[i].valid }, new { @class = "btn btn-danger" })
+                            }
+                            else
+                            {
+                                @Html.ActionLink("更改为有效", "DelPost", "Post", new { pid = Model[i].postid, pvalid = Model[i].valid }, new { @class = "btn btn-success" })
+                            }
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</body>
+</html>

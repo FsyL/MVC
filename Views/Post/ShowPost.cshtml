@@ -1,0 +1,200 @@
+﻿@model Mvc_BBS.Models.postInfo
+@using Mvc_BBS.Models
+@{
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+    postInfo p = ViewBag.post;
+
+    List<replyInfo> lst = ViewBag.lst;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ShowPost</title>
+    <style>
+        .box {
+            border:1px solid #b2aeae;
+        }
+
+        .post {
+            margin:15px 25px 10px 25px;
+        }
+
+        .ptitle {
+            font-size: 25px;
+            margin-bottom: 17px;
+            margin-top: 10px;
+            margin-left: 5px;
+        }
+
+        .ziti {
+            color: gray;
+            font-size: 15px;
+        }
+
+        .timeleft {
+            margin-left: 7px;
+        }
+
+        .con {
+            margin:10px 20px;
+            padding:5px 20px;
+            text-indent:2em;
+            border-radius:10px;
+            background-color:#f7eeee;
+        }
+        .b {
+            margin:15px 25px 15px 25px;
+            border: 1px solid gray;
+        }
+
+        .c {
+            margin-top: 30px;
+            border: 1px solid gray;
+        }
+
+        .tareadiv {
+            height: 200px;
+            margin: 0 30px 20px 30px;
+        }
+
+        .tarea {
+            height: 150px;
+            margin-bottom:20px;
+            width: 100%;
+        }
+
+
+        .rep {
+            margin-top: 5px;
+            margin-left: 5px;
+        }
+
+        .rtime {
+            color: #808080;
+            margin-right: 30px;
+        }
+        .rname{
+            font-size:18px;
+        }
+        .repsty {
+            background-color: red;
+            display: inline-block;
+            height: 40px;
+            width: 5px;
+            vertical-align:middle;
+            margin-right:15px;
+        }
+        .reptitle {
+            display: inline-block;
+            height: 40px;
+            font-size: 30px;
+            line-height: 40px;
+            font-weight: 600;
+            vertical-align: middle;
+        }
+        .repbox{
+            margin:10px;  
+        }
+        .msgsucc{
+            position:fixed;
+            top:40vh;
+            left:45vw;
+            width:200px;
+            height:80px;
+            border:1px solid #c8bbbb;
+            border-radius:14px;
+            opacity:0.8;
+            color:red;
+            text-align:center;
+
+        }
+        .succsizi{
+            line-height:40px;
+        }
+    </style>
+    <script type="text/javascript">
+
+        $(function () {
+            $(".msgsucc").hide();
+        })
+
+        function repysucc() {
+            $("#txtare").val("");
+            $(".msgsucc").show();
+
+            setTimeout(function () {
+                $(".msgsucc").hide();
+            }, 1000)
+        }
+        
+    </script>
+</head>
+<body>
+    <div class="container box">
+        <div class="row post">
+                <div class="ptitle text-center"><b>@Html.Label(Model.posttitle)</b></div>
+                <div class="ziti col-md-4 col-md-offset-8">
+                    @Html.Label(Model.userIinfo.name)
+                    @Html.Label(Model.posttime.ToString(), new { @class = "timeleft" })
+                </div>
+        </div>
+        <div class="row">
+            <div class="con">
+                @Html.Raw(Model.postcontent)
+            </div>
+        </div>
+        <div class="row">
+            <div class="b">
+                <div class="repbox">
+                    <span class="repsty"></span>
+                    <span class="reptitle">评论</span>
+                </div>
+
+                @using (Ajax.BeginForm("Reply", "Rep", new { pid = Model.postid }, new AjaxOptions
+                {
+                    InsertionMode = InsertionMode.InsertBefore,
+                    UpdateTargetId = "repcon",
+                    HttpMethod = "post",
+                    OnSuccess="repysucc"
+                }))
+                {
+
+                    <div class="tareadiv">
+                        @Html.TextArea("txtare", null, 1, 1, new { @class = "tarea" })
+                        <input type="submit" value="提交" class="btn btn-danger pull-right" />
+                    </div>
+                    
+                }
+                <div class="msgsucc">
+                    <h4 class="succsizi">发布评论成功</h4>
+
+                </div>
+
+                <div class="repbox">
+                    <span class="repsty"></span>
+                    <span class="reptitle">查看评论</span>
+                </div>
+
+                @* 评论的内容 *@
+                <div id="repcon">
+                    @foreach (replyInfo r in lst)
+                    {
+                        <hr />
+                        <div class="rep">
+                            &emsp;@Html.ActionLink(r.replyuname, "#", "#", new { @class = "rname" })
+                            @Html.Label(r.replytime.ToString(), new { @class = "pull-right rtime" })
+                            <br /><br />
+                            &emsp;@Html.Label("txtreply", r.relycontent)
+                            <br />
+                            &emsp;<span class="glyphicon glyphicon-thumbs-up good" aria-hidden="true">赞</span>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

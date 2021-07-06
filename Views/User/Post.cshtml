@@ -1,0 +1,64 @@
+﻿@model List<Mvc_BBS.Models.postInfo>
+@using Mvc_BBS.Models;
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Pos</title>
+    <style type="text/css">
+        .titles {
+            font-size: 20px;
+            color: #000000;
+            font-weight: 800;
+        }
+
+            .titles:hover {
+                font-size: 20px;
+                color: #b43838;
+                text-decoration: none;
+                font-weight: 800;
+            }
+
+        .content {
+            height: 50px;
+            width: 100%;
+            text-indent: 2em;
+        }
+
+
+        .cons {
+            color: #000000;
+        }
+
+        .cons:hover {
+            text-decoration: none;
+            color: #000000;
+        }
+        .uinfo{
+            border-bottom: 1px solid #c3b8b8;
+            height:40px;
+        }
+        .logoimg{
+            margin-right:5px;
+            height:30px;
+            width:30px;
+            line-height:40px;
+            border:1px solid #808080;
+            border-radius:20px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        @foreach (var p in Model)
+        {
+            <h3>@Html.ActionLink(p.posttitle, "ShowPost", "Post", new { pid = p.postid }, new { @class = "titles" })</h3>
+            <p>@Html.ActionLink(p.postcontent.Length >= 10 ? p.postcontent.Substring(0, 15) + "..." : p.postcontent, "ShowPost", "Post", new { pid = p.postid }, new { @class = "cons" })</p>
+            <div class="uinfo"><img src="~/LogoImg/@p.userIinfo.logo" class="logoimg" />@Html.Label(p.userIinfo.name + "  ·  " + p.posttime, new { @class = "" })</div>
+        }
+
+    </div>
+
+</body>
+</html>

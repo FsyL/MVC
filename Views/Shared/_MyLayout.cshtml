@@ -1,0 +1,187 @@
+﻿
+@using Mvc_BBS.Models
+
+@{
+    userIinfo u = ViewBag.user;
+}
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <style type="text/css">
+         .top {
+            width: 100vw;
+            height: 60px;
+            line-height:60px;
+            position: fixed;
+            top: 0px;
+            border: 1px solid #808080;
+            background-image: url('../../img/topbg1920_60.png');
+            z-index:1;
+            box-shadow:4px 10px 15px #c7c1c1;
+        }
+        .topcon{
+            float:right;
+            margin-right:15vw;
+        }
+        .txt_top{
+            font-size:20px;
+            margin-right:10px;
+        }
+        .mylay {
+            margin-top:70px;
+        }
+
+        .msmodel{
+            width:100vw;
+            height:100vh;
+            position:fixed;
+            top:0px;
+            background-color:#808080;
+            opacity:0.75;
+            z-index:2;
+        }
+        .msnoot{
+            display:none;
+        }
+        .msshow{
+            display:block;
+        }
+        .mscon{
+            width:300px;
+            height:160px;
+            background-color:white;
+            text-align:center;
+            border:1px solid #4f4949;
+            margin-top:50vh;
+            margin-left:50vw;
+            transform:translate(-50%,-50%);
+            border-radius:14px;
+            
+        }
+        .msbtn{
+            height:80px;
+            line-height:90px;
+        }
+        .bard{
+            margin-right:30px;
+        }
+        .tlogoimg{
+            margin-right:5px;
+            height:35px;
+            width:35px;
+            line-height:40px;
+            border:1px solid #808080;
+            border-radius:20px;
+        }
+        .Uptbox {
+            width: 100vw;
+            height: 100vh;
+            position: fixed;
+            top: 0px;
+            background-color: #808080;
+            opacity: 0.95;
+        }
+        .uptcon {
+            margin-top: 50vh;
+            margin-left: 50vw;
+            padding:10px 40px;
+            transform: translate(-50%,-50%);
+            border: 1px solid #c7c1c1;
+            border-radius:14px;
+            width: 350px;
+            height: 400px;
+            background-color: white;
+        }
+        tr{
+            height:45px;
+        }
+        .btnupt {
+            margin-left:55px;
+        }
+        .btnUsercancel{
+            margin-left:20px;
+        }
+        .UpUsername {
+            color: #ff6a00;
+        }
+        .btnbor{
+            width:65px;
+            height:400px;
+            border:1px solid red;
+            display:inline-block;
+        }
+    </style>
+
+    <script type="text/javascript">
+
+        function uptUsersuccess() {
+            $(".btnUsercancel").click(function () {
+                $("#uptUser").hide();
+            })
+
+            $("#Upname").click(function () {
+                $("#uptUser").show();
+            })
+        }
+
+
+        $(function () {
+
+            $(".msmodel").addClass("msnoot");
+            $("#Exitbtn").click(function () {
+                $(".msmodel").removeClass("msnoot").addClass("msshow");
+            })
+            $("#celbtn").click(function () {
+                $(".msmodel").removeClass("msshow").addClass("msnoot");
+            })
+        })
+    </script>
+</head>
+<body>
+    <div class="top">
+        <div class="topcon">
+            @Html.ActionLink("首页", "IndexShow", "User", null, new { @class = "btn btn-info bard" })
+            @if (u.flag == 1)
+            {
+                
+                @Html.ActionLink("个人信息", "UserInfo", "User", null, new { @class = "btn btn-success bard" })
+                @Html.ActionLink("帖子信息", "PostInfo", "Post", null, new { @class = "btn btn-success bard" })
+                @Html.ActionLink("板块信息", "BodInfo", "Post", null, new { @class = "btn btn-success bard" })
+            }
+            @Html.ActionLink("发布帖子", "AddPost", "Post", null, new { @class = "btn btn-primary bard" })
+            <span class="txt_top">欢迎你！
+            @Ajax.ActionLink(u.name, "UptUser", "User", new { uid = u.id },new AjaxOptions {
+           HttpMethod = "post",
+           InsertionMode = InsertionMode.Replace,
+           UpdateTargetId = "uptUser",
+           OnSuccess = "uptUsersuccess"
+       },new { id="Upname", @class="UpUsername" })
+
+            
+            
+            <img src="~/LogoImg/@u.logo" class="tlogoimg" /></span>
+            <input id="Exitbtn" type="button" value="安全退出" class="btn btn-danger " />
+        </div>
+    </div>
+
+    <div class="mylay">
+        @RenderBody()
+    </div>
+
+    <div class="msmodel">
+        <div class="mscon">
+            <h3>确定退出么？</h3>
+            <div class="msbtn">
+                @Html.ActionLink("退出", "Exit", "User", null, new { @class = "btn btn-danger" })
+                &nbsp; &nbsp;
+                <input id="celbtn" type="button" value="取消" class="btn btn-info" />
+            </div>
+        </div>
+    </div>
+    <div id="uptUser"></div>
+</body>
+</html>

@@ -1,0 +1,100 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Reg</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <style type="text/css">
+        body {
+            background-image: url('../../img/regBg1920_937.png');
+        }
+        .reg{
+            background-color:#ffffff;
+            opacity:0.75;
+            border-radius:14px;
+        }
+        .xxun{
+            margin-top:30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2 col-md-offset-1 xxun">
+                <img src="~/img/xiaoxun300_300.png" />
+            </div>
+            <div class="col-md-3 col-md-offset-6 reg" style="margin-top:15vh">
+                @using (Html.BeginForm("Reg", "User", FormMethod.Post))
+                {
+                    <h1 class="text-left">欢迎注册</h1>
+                    <p>已有帐号？ <a href="/User/Login">登录</a></p>
+                    <table class="table">
+                        <tr>
+                            <td style="border-top:none">
+                                姓名:
+                            </td>
+                            <td style="border-top:none">
+                                @Html.TextBox("txtName")
+                            </td>
+                        </tr>
+                        <tr>    
+                            <td style="border-top:none">
+                                密码:
+                            </td>
+                            <td style="border-top:none">
+                                @Html.Password("txtPwd")
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border-top:none">
+                                性别:
+                            </td>
+                            <td style="border-top:none">
+                                @Html.RadioButton("rSex", 1, true) 男
+                                @Html.RadioButton("rSex", 0) 女
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border-top:none">
+                                签名:
+                            </td>
+                            <td style="border-top:none">
+                                @Html.TextBox("txtSigns")
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border-top:none">
+                                邮箱:
+                            </td>
+                            <td style="border-top:none">
+                                @Html.TextBox("txtEmail")
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border-top:none">
+                                QQ:
+                            </td>
+                            <td style="border-top:none">
+                                @Html.TextBox("txtQq")
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border-top:none" colspan="2" class="text-center">
+                                <input class="btn btn-info" type="submit" value="注册" />
+                            </td>
+                        </tr>
+                    </table>
+                }
+            </div>
+        </div>
+    </div>
+</body>
+</html>

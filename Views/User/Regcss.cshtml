@@ -1,0 +1,32 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Regcss</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <script type="text/javascript">
+        var i = 5
+        window.onload = function f() {
+            if (i == 0) {
+                window.location.href = "/User/Login";
+            } else {
+                document.getElementById("txtp").innerHTML = "注册成功，在" + i + "秒后进入<a href='/User/Login'>登录页面</a>";
+                i--;
+            }
+            setTimeout(f, 1000);
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <p>注册成功</p>
+        <div id="txtp"></div>
+    </div>
+</body>
+</html>
